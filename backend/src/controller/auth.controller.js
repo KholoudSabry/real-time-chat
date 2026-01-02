@@ -5,13 +5,16 @@ import { generateToken } from "../lib/utils.js";
 export const signup =  async (req,res)=>{
     const {fullName, email,password} =req.body
    try {
+    if(!fullName || !password || !email){
+        res.status(400).json({message : "all fields are required "})
+    }
     //hash password
     if(password.length < 6){
         return res.status(400).json({
             message : "password must be at least 6 character"
         });
         const user = await User.findOne({email})
-        if(user) return res.status(400).json({message :"Eamil already exists"})
+        if(user) return res.status(400).json({message :"email already exists"})
     }
 const salt = await bcrypt.genSalt(10)
 
@@ -33,7 +36,7 @@ if(newUser){
         email: newUser.email,
         profilePic: newUser.profilePic,
 
-    });
+    }); 
 
 }else{
 
@@ -43,7 +46,7 @@ if(newUser){
 }
    } catch (error) {
     console.log("error is ", error.message);
-    res.status(500).json({message: "server error"})
+    res.status(500).json({message: "you should fill all fields"})
     
     
    }
