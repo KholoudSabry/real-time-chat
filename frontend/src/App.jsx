@@ -5,8 +5,15 @@ import LoginPage from "./pages/loginPage";
 import SettingsPage from "./pages/SettingsPage";
 import ProfilePage from "./pages/ProfilePage";
 import Navbar from "./components/Navbar";
+import { useAuthStore } from "./store/useAuthStore";
+import { useEffect } from "react";
 
 function App() {
+  const {authUser, checkAuth} = useAuthStore()
+  useEffect(()=>{
+checkAuth()
+  },[]);
+
   return (
     <>
       <Navbar />
